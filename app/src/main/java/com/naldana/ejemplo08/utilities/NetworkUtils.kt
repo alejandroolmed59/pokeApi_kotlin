@@ -1,6 +1,7 @@
 package com.naldana.ejemplo08.utilities
 
 import android.net.Uri
+import android.support.annotation.Nullable
 import android.util.Log
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -11,16 +12,18 @@ import java.util.*
 object NetworkUtils {
 
     val POKEMON_API_BASE_URL = "https://pokeapi.co/api/v2/"
-    val POKEMON_INFO = "pokemon"
 
     private val TAG = NetworkUtils::class.java.simpleName
 
-    fun buildUrl(): URL {
-        val builtUri = Uri.parse(POKEMON_API_BASE_URL)
-                .buildUpon()
-                .appendPath(POKEMON_INFO)
-                .build()
-
+    fun buildUrl(POKEMON_INFO: String, @Nullable POKEMONID: String?=null): URL {
+        val builtUri = Uri.parse(POKEMON_API_BASE_URL).buildUpon()
+        if(POKEMON_INFO=="pokemon") {
+            builtUri.appendPath(POKEMON_INFO)
+        }
+        if(POKEMONID!=null){
+            builtUri.appendPath(POKEMONID)
+        }
+        builtUri.build()
         var url: URL? = null
         try {
             url = URL(builtUri.toString())

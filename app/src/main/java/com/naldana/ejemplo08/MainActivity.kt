@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemonMutableList)
+        viewAdapter = PokemonAdapter(pokemonMutableList, this)
 
         rv_pokemon_list.apply {
             setHasFixedSize(true)
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     private inner class FetchPokemonTask : AsyncTask<String, Void, String>() {
         override fun doInBackground(vararg params: String?): String {
 
-            val pokeAPI = NetworkUtils.buildUrl()
+            val pokeAPI = NetworkUtils.buildUrl("pokemon")
 
             return try {
                 NetworkUtils.getResponseFromHttpUrl(pokeAPI)!!
@@ -63,11 +63,13 @@ class MainActivity : AppCompatActivity() {
 
                 var jsonPokeInfo= JSONObject(pokemonInfo)
                 var arrayPokemons= jsonPokeInfo.getJSONArray("results")
-                for(i in 0 until arrayPokemons.length()) {
 
-                    var nuevoPok= Pokemon(i, arrayPokemons.getJSONObject(i).getString("name"), arrayPokemons.getJSONObject(i).getString("url"))
+                //Log.v("Split", id)
+                for(i in 0 until arrayPokemons.length()) {
+                    var id= arrayPokemons.getJSONObject(i).getString("url").substring(34,(arrayPokemons.getJSONObject(i).getString("url").length-1))
+                    var nuevoPok= Pokemon(i, arrayPokemons.getJSONObject(i).getString("name"), arrayPokemons.getJSONObject(i).getString("url"),id)
                     pokemonMutableList.add(nuevoPok)
-                    Log.v("Print", pokemonMutableList[i].toString())
+                    //Log.v("Print", pokemonMutableList[i].toString())
                 }
                 initRecycler()
             }

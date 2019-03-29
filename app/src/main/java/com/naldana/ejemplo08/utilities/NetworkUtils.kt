@@ -15,12 +15,11 @@ object NetworkUtils {
 
     private val TAG = NetworkUtils::class.java.simpleName
 
-    fun buildUrl(POKEMON_INFO: String, @Nullable POKEMONID: String?=null): URL {
+    fun buildUrl(POKEMON_INFO: String, @Nullable POKEMONID: String? = null): URL {
         val builtUri = Uri.parse(POKEMON_API_BASE_URL).buildUpon()
-        if(POKEMON_INFO=="pokemon") {
-            builtUri.appendPath(POKEMON_INFO)
-        }
-        if(POKEMONID!=null){
+                .appendPath(POKEMON_INFO)
+
+        if (POKEMONID != null) {
             builtUri.appendPath(POKEMONID)
         }
         builtUri.build()

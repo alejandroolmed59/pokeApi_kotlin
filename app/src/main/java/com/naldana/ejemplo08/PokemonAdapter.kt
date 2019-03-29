@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,8 +17,6 @@ import com.naldana.ejemplo08.utilities.ActivityPokemonFicha
 import kotlinx.android.synthetic.main.list_element_pokemon.view.*
 
 class PokemonAdapter(val items: List<Pokemon>, val context: Context) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
-
-    // TODO: Para contar elementos creados
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val view = LayoutInflater.from(parent.context)
@@ -43,6 +42,7 @@ class PokemonAdapter(val items: List<Pokemon>, val context: Context) : RecyclerV
         private lateinit var urlPok: String
         private lateinit var idPokeApi: String
         lateinit var pokeFaceItem: ImageView
+        lateinit var metInputPokemonId: EditText
 
         init{
             itemView.setOnClickListener{
@@ -58,6 +58,7 @@ class PokemonAdapter(val items: List<Pokemon>, val context: Context) : RecyclerV
             nombPok= item.name
             urlPok= item.url
             idPokeApi= item.idPokeApi
+
 
             tv_pokemon_name.text = nombPok
             pokeFaceItem= pokeFace
